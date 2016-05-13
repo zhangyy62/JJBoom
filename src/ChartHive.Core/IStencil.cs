@@ -34,11 +34,6 @@ namespace ChartHive.Core
             set;
         }
 
-        IStencilCategory Category
-        {
-            get;
-        }
-
         Image Icon
         {
             get;

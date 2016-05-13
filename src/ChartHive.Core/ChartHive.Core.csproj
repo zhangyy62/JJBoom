@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AddinExpress.MSO.2005, Version=6.6.3059.2005, Culture=neutral, PublicKeyToken=4416dd98f0861965, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\AddinExpress.MSO.2005.dll</HintPath>
-    </Reference>
     <Reference Include="Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -59,22 +55,20 @@
     <Compile Include="AnchorTypeConvert.cs" />
     <Compile Include="AnchorHelper.cs" />
     <Compile Include="ClipBoardHelper.cs" />
+    <Compile Include="InternalDataObject.cs" />
     <Compile Include="InternalDictionary.cs" />
     <Compile Include="ProgressEventArgs .cs" />
+    <Compile Include="Serialization\IOutput.cs" />
     <Compile Include="ShapeBorder.cs" />
     <Compile Include="ShapeRangeDeCompose.cs" />
     <Compile Include="IStencil.cs" />
-    <Compile Include="IStencilCategory.cs" />
-    <Compile Include="IStencilManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartResizeSettingEnum.cs" />
-    <Compile Include="StencilCategory.cs" />
-    <Compile Include="StencilCategoryHelper.cs" />
+    <Compile Include="StencilDataConvert.cs" />
     <Compile Include="StencilEventArgs.cs" />
+    <Compile Include="UnmanagedDllImporter.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="AddinExpress.MSO.2005.dll" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
