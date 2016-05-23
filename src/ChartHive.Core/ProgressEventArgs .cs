@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChartHive.Core
+namespace JJBoom.Core
 {
     public class ProgressEventArgs : EventArgs
     {

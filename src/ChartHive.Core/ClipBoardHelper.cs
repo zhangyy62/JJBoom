@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ChartHive.Core
+namespace JJBoom.Core
 {
     public static class ClipBoardDataProvider
     {

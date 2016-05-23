@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.Office.Interop.PowerPoint;
 
-namespace ChartHive.Core
+namespace JJBoom.Core
 {
     public class AnchorHelper
     {

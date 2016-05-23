@@ -9,7 +9,7 @@ using GroupShapes = Microsoft.Office.Interop.PowerPoint.GroupShapes;
 using Shape = Microsoft.Office.Interop.PowerPoint.Shape;
 using ShapeRange = Microsoft.Office.Interop.PowerPoint.ShapeRange;
 
-namespace ChartHive.Core
+namespace JJBoom.Core
 {
     public class ShapeRangeDeCompose
     {

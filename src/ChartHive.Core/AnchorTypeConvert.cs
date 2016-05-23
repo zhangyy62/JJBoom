@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChartHive.Core
+namespace JJBoom.Core
 {
     public class AnchorTypeConvert
     {
