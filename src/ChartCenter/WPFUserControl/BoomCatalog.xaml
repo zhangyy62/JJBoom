@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="ChartCenter.WPFUserControl.BoomCatalog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ChartCenter.WPFUserControl"
+             mc:Ignorable="d" 
+              Width="auto" Height="auto" HorizontalAlignment="Stretch">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="BoomStencilTemplate"  >
+                <local:BoomStencil></local:BoomStencil>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Expander>
+            <ListBox ItemTemplate="{StaticResource BoomStencilTemplate}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                
+            </ListBox>
+        </Expander>
+    </Grid>
+</UserControl>
