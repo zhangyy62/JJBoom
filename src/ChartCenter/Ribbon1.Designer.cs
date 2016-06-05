@@ -38,11 +38,13 @@
             this.group1 = this.Factory.CreateRibbonGroup();
             this.tab2 = this.Factory.CreateRibbonTab();
             this.group2 = this.Factory.CreateRibbonGroup();
-            this.button2 = this.Factory.CreateRibbonButton();
             this.button3 = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
             this.group3 = this.Factory.CreateRibbonGroup();
             this.button4 = this.Factory.CreateRibbonButton();
+            this.button5 = this.Factory.CreateRibbonButton();
+            this.button6 = this.Factory.CreateRibbonButton();
+            this.button2 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.tab2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -75,12 +77,7 @@
             this.group2.Items.Add(this.button1);
             this.group2.Label = "group2";
             this.group2.Name = "group2";
-            // 
-            // button2
-            // 
-            this.button2.Label = "加载";
-            this.button2.Name = "button2";
-            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
+            this.group2.Visible = false;
             // 
             // button3
             // 
@@ -90,21 +87,42 @@
             // 
             // button1
             // 
-            this.button1.Label = "写入";
+            this.button1.Label = "添加到JJBoom";
             this.button1.Name = "button1";
             this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
             // 
             // group3
             // 
             this.group3.Items.Add(this.button4);
-            this.group3.Label = "group3";
+            this.group3.Items.Add(this.button5);
+            this.group3.Items.Add(this.button6);
+            this.group3.Label = "JJ Boom";
             this.group3.Name = "group3";
             // 
             // button4
             // 
-            this.button4.Label = "弹出右侧面板";
+            this.button4.Label = "Show JJ";
             this.button4.Name = "button4";
-            this.button4.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button4_Click);
+            this.button4.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ShowPanel_Click);
+            // 
+            // button5
+            // 
+            this.button5.Label = "Export All JJs";
+            this.button5.Name = "button5";
+            this.button5.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ExportAllJJs_Click);
+            // 
+            // button6
+            // 
+            this.button6.Label = "AddShapesToCatalog";
+            this.button6.Name = "button6";
+            this.button6.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddToCatalog_Click);
+            // 
+            // button2
+            // 
+            this.button2.Label = "加载";
+            this.button2.Name = "button2";
+            this.button2.Visible = false;
+            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
             // 
             // Ribbon1
             // 
@@ -132,10 +150,12 @@
         private Microsoft.Office.Tools.Ribbon.RibbonTab tab2;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button3;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group3;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button4;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button5;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button6;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
     }
 
     partial class ThisRibbonCollection

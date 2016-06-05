@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -10,27 +11,46 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Windows.Forms;
+using ChartCenter.WPFViewModel;
 using JJBoom.Core;
+using Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
 using Microsoft.Office.Tools.Ribbon;
 using Newtonsoft.Json;
+using CustomTaskPane = Microsoft.Office.Tools.CustomTaskPane;
+using Shape = Microsoft.Office.Interop.PowerPoint.Shape;
+using ShapeRange = Microsoft.Office.Interop.PowerPoint.ShapeRange;
 using View = Microsoft.Office.Interop.PowerPoint.View;
 
 namespace ChartCenter
 {
     public partial class Ribbon1
     {
-        private readonly string filepath = @"C:\Users\rabook\Desktop\powermockup2.3.1\1.jjb";
- 
+        // private readonly string filepath = @"C:\Users\rabook\Desktop\test\1.jjb";
+        private string filepath = String.Empty;
+
+        private CustomTaskPane _customTaskPane  ;
+
+        private BoomCatalogContainer _boomCatalogContainer = new BoomCatalogContainer();
+
+        private string _selectedCatalogName;
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-            MemoryStream stream = FileToStream(filepath);
-            Boom boom = (Boom)DeserializeFromStream(stream);
-            BoomCatalogContainer boomCatalogContainer = new BoomCatalogContainer();
-            boomCatalogContainer.SetBoomCatalog(boom);
-            var currentTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(boomCatalogContainer, "JJ Boom");
-            currentTaskPane.Visible = true;
+            filepath += Environment.CurrentDirectory + ConfigurationManager.AppSettings["StencilsPath"];
+            if (!File.Exists(filepath))
+            {
+                return;
+            }
+         
+            
+            MemoryStream stream = BoomReader.FileToStream(filepath);
+         /*   Boom boom = (Boom)StreamUtility.DeserializeFromStream(stream);
+
+            _boomCatalogContainer.SetBoomCatalog(boom);*/
+             _customTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(_boomCatalogContainer, "JJ Boom");
+            _customTaskPane.Width = 480;
+            _customTaskPane.Visible = false;                       
         }
 
         private void button1_Click(object sender, RibbonControlEventArgs e)
@@ -39,9 +59,9 @@ namespace ChartCenter
             Selection selection = documentWindow.Selection;
             if ((selection != null) && (selection.Type == PpSelectionType.ppSelectionShapes))
             {
-                   ShapeRange shapeRange = selection.HasChildShapeRange ? selection.ChildShapeRange : selection.ShapeRange;
-                   Dictionary<Shape, string> dictionary = ShapeRangeDeCompose.smethod_1(shapeRange);
-                   shapeRange.Copy();
+                ShapeRange shapeRange = selection.HasChildShapeRange ? selection.ChildShapeRange : selection.ShapeRange;
+                Dictionary<Shape, string> dictionary = ShapeRangeDeCompose.smethod_1(shapeRange);
+                shapeRange.Copy();
                 CustomTwoTuples<string, Stream> streamAndShapeDataFormat = ClipBoardDataProvider.GetStreamFromeClipboard();
                 CustomTwoTuples<string, Stream> class2 = ClipBoardDataProvider.GetStreamFromeClipboard();
                 Boom boom = new Boom();
@@ -54,10 +74,10 @@ namespace ChartCenter
                        sFile.Write(StreamToBytes(class2.GetRightOne()), 0, 0);
                    }*/
 
-                MemoryStream stream = SerializeToStream(boom);
-                Boom sd = (Boom)DeserializeFromStream(stream);
+                MemoryStream stream = BoomWriter.SerializeToStream(boom);
+                Boom sd = (Boom)StreamUtility.DeserializeFromStream(stream);
                 //   Boom list = (Boom)serializer.ReadObject(stream);
-                StreamToFile(stream, filepath);
+                BoomWriter.StreamToFile(stream, filepath);
             }
 
             /*       try
@@ -96,81 +116,82 @@ namespace ChartCenter
             View view = documentWindow.View;
             view.Paste();
         }
-
-        public byte[] StreamToBytes(Stream stream)
-        {
-            byte[] bytes = new byte[stream.Length];
-            stream.Read(bytes, 0, bytes.Length);
-            // 设置当前流的位置为流的开始 
-            stream.Seek(0, SeekOrigin.Begin);
-            return bytes;
-        }
-
-        public void StreamToFile(Stream stream, string fileName)
-        {
-
-            using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
-            {
-                stream.Seek(0, SeekOrigin.Begin);
-                stream.CopyTo(fs);
-            }
-        }
-
-        public MemoryStream FileToStream(string fileName)
-        {
-            // 打开文件 
-            FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-            // 读取文件的 byte[] 
-            byte[] bytes = new byte[fileStream.Length];
-            fileStream.Read(bytes, 0, bytes.Length);
-            fileStream.Close();
-            // 把 byte[] 转换成 Stream 
-            MemoryStream stream = new MemoryStream(bytes);
-            return stream;
-        }
+ 
 
         private void button3_Click(object sender, RibbonControlEventArgs e)
         {
-           MemoryStream stream = FileToStream(filepath);
-           Boom boom = (Boom)DeserializeFromStream(stream);
+           MemoryStream stream = BoomReader.FileToStream(filepath);
+           Boom boom = (Boom)StreamUtility.DeserializeFromStream(stream);
            Clipboard.SetDataObject(StencilDataConvert.ConvertToDataObject(boom.ShapeData, ClipBoardDataProvider.GVMLClipFormat));
           
         }
-
-        /// <summary>
-        /// serializes the given object into memory stream
-        /// </summary>
-        /// <param name="objectType">the object to be serialized</param>
-        /// <returns>The serialized object as memory stream</returns>
-        public static MemoryStream SerializeToStream(object objectType)
+       
+        private void ShowPanel_Click(object sender, RibbonControlEventArgs e)
         {
-            MemoryStream stream = new MemoryStream();
-            IFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(stream, objectType);
-            return stream;
+          
+            if (Globals.ThisAddIn.CustomTaskPanes.Contains(_customTaskPane))
+            {
+                _customTaskPane.Visible = true;
+            }  
         }
 
-        /// <summary>
-        /// deserializes as an object
-        /// </summary>
-        /// <param name="stream">the stream to deserialize</param>
-        /// <returns>the deserialized object</returns>
-        public static object DeserializeFromStream(MemoryStream stream)
+        private void ExportAllJJs_Click(object sender, RibbonControlEventArgs e)
         {
-            IFormatter formatter = new BinaryFormatter();
-            stream.Seek(0, SeekOrigin.Begin);
-            object objectType = formatter.Deserialize(stream);
-            return objectType;
+           
         }
 
-        private void button4_Click(object sender, RibbonControlEventArgs e)
+        private void AddToCatalog_Click(object sender, RibbonControlEventArgs e)
         {
-            MemoryStream stream = FileToStream(filepath);
-            Boom boom = (Boom)DeserializeFromStream(stream);
-            BoomCatalogContainer boomCatalogContainer = new BoomCatalogContainer();
-            boomCatalogContainer.SetBoomCatalog(boom);
-            var currentTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(boomCatalogContainer, "JJ Boom");
-            currentTaskPane.Visible = true;
+            DocumentWindow documentWindow = Globals.ThisAddIn.Application.ActiveWindow;
+            Selection selection = documentWindow.Selection;
+            try
+            {
+                if ((selection != null) && (selection.Type == PpSelectionType.ppSelectionShapes))
+                {
+                    SelectCatalogForm selectCatalogForm = new SelectCatalogForm();
+                    selectCatalogForm.GetSelectedCatalogNameAction += GetSelectedCatalog;
+                    selectCatalogForm.ShowDialog();
+                    //BoomCatalogViewModel boomCatalogViewModel = GlobalBoomCatalogs.GetInstance().GetBoomCatalogViewModelByName(_selectedCatalogName);
+                    BoomCatalogViewModel boomCatalogViewModel = null;
+                    foreach (BoomCatalogViewModel catalogViewModel in _boomCatalogContainer.GetAllBoomCatalogViewModel())
+                    {
+                        if (catalogViewModel.BoomCatalogName == _selectedCatalogName)
+                        {
+                            boomCatalogViewModel = catalogViewModel;
+                        }   
+                    }
+                    ShapeRange shapeRange = selection.HasChildShapeRange ? selection.ChildShapeRange : selection.ShapeRange;
+                    Dictionary<Shape, string> dictionary = ShapeRangeDeCompose.smethod_1(shapeRange);
+                    shapeRange.Copy();
+                    CustomTwoTuples<string, Stream> streamAndShapeDataFormat = ClipBoardDataProvider.GetStreamFromeClipboard();
+               
+                    Boom boom = new Boom();
+                    boom.Name = "测试";
+                    boom.Icon = Image.FromStream(ClipBoardDataProvider.GetPng());
+                    boom.ShapeData = streamAndShapeDataFormat.GetRightOne();
+                    boom.ShapeDataFormat = streamAndShapeDataFormat.GetLeftOne();
+                    BoomStencilViewModel boomStencilViewModel = new BoomStencilViewModel();
+                    boomStencilViewModel.SetCurrentViewModelByBoom(boom);
+                    boomCatalogViewModel.BoomStencilViewModels.Add(boomStencilViewModel);
+
+                }
+            }
+            finally
+            {
+                if (selection != null)
+                {
+                    Marshal.ReleaseComObject(selection);
+                }
+            }
+          
+
         }
+
+        private void GetSelectedCatalog(string selectedCatalogName)
+        {
+            _selectedCatalogName = selectedCatalogName;
+        }
+
+        
     }
 }

@@ -29,8 +29,6 @@ namespace JJBoom.UnitTest
                 accountContext.Accounts.Add(account);
                 accountContext.SaveChanges();
             }
- 
-
         }
     }
 }
