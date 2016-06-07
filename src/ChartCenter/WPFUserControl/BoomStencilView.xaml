@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="ChartCenter.WPFUserControl.BoomStencilView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ChartCenter.WPFUserControl"
+               xmlns:wpfViewModel="clr-namespace:ChartCenter.WPFViewModel"
+        
+             mc:Ignorable="d"   Width="150" Height="40">
+    
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/Metro/Metro.MSControls.Core.Implicit.xaml" />
+
+                <ResourceDictionary Source="../Themes/Metro/Metro.MSControls.Toolkit.Implicit.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Image Width="40" Height="40" Stretch="Uniform"  Source="{Binding ImageSource, Mode=TwoWay}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="0" />
+        <TextBox TextWrapping="Wrap" VerticalAlignment="Stretch"  Background="{x:Null}" Text="{Binding Text, Mode=TwoWay}" HorizontalAlignment="Stretch"  Grid.Column="1" >
+         
+        </TextBox>
+        
+    </Grid>
+</UserControl>
