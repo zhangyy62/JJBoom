@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ChartCenter.WPFUserControl;
 using JJBoom.Core;
+using Microsoft.Office.Interop.PowerPoint;
+using View = System.Windows.Forms.View;
 
 namespace ChartCenter.WPFViewModel
 {
@@ -73,11 +77,11 @@ namespace ChartCenter.WPFViewModel
         public void SetCurrentViewModelByBoom(Boom boom)
         {
             _boom = boom;
-            /* BoomCatalog boomCatalog = new BoomCatalog();
-             boomCatalog.InternalBoom = boom;
-             boomCatalog.Image.Source = ToWpfImage(boom.Icon);
-             boomCatalog.TextBlock.Text = boom.Name;*/
-            ImageSource = ToWpfImage(boom.Icon);
+            if (boom.Icon == null)
+            {
+                boom.Icon = Image.FromStream(boom.PreviewImage);
+            }
+               ImageSource = ToWpfImage(boom.Icon);
             Text = boom.Name;
         }
 

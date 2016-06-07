@@ -38,13 +38,13 @@
             this.group1 = this.Factory.CreateRibbonGroup();
             this.tab2 = this.Factory.CreateRibbonTab();
             this.group2 = this.Factory.CreateRibbonGroup();
+            this.button2 = this.Factory.CreateRibbonButton();
             this.button3 = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
             this.group3 = this.Factory.CreateRibbonGroup();
             this.button4 = this.Factory.CreateRibbonButton();
             this.button5 = this.Factory.CreateRibbonButton();
             this.button6 = this.Factory.CreateRibbonButton();
-            this.button2 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.tab2.SuspendLayout();
             this.group2.SuspendLayout();
@@ -67,7 +67,7 @@
             // 
             this.tab2.Groups.Add(this.group2);
             this.tab2.Groups.Add(this.group3);
-            this.tab2.Label = "ChartCenter";
+            this.tab2.Label = "JJ Boom";
             this.tab2.Name = "tab2";
             // 
             // group2
@@ -78,6 +78,13 @@
             this.group2.Label = "group2";
             this.group2.Name = "group2";
             this.group2.Visible = false;
+            // 
+            // button2
+            // 
+            this.button2.Label = "加载";
+            this.button2.Name = "button2";
+            this.button2.Visible = false;
+            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -116,13 +123,6 @@
             this.button6.Label = "AddShapesToCatalog";
             this.button6.Name = "button6";
             this.button6.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddToCatalog_Click);
-            // 
-            // button2
-            // 
-            this.button2.Label = "加载";
-            this.button2.Name = "button2";
-            this.button2.Visible = false;
-            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
             // 
             // Ribbon1
             // 
