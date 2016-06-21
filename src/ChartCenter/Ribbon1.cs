@@ -26,7 +26,6 @@ namespace ChartCenter
 {
     public partial class Ribbon1
     {
-        // private readonly string filepath = @"C:\Users\rabook\Desktop\test\1.jjb";
         private string filepath = String.Empty;
 
         private CustomTaskPane _customTaskPane  ;
@@ -37,17 +36,6 @@ namespace ChartCenter
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-            filepath += Environment.CurrentDirectory + ConfigurationManager.AppSettings["StencilsPath"];
-            if (!File.Exists(filepath))
-            {
-                return;
-            }
-         
-            
-            MemoryStream stream = BoomReader.FileToStream(filepath);
-         /*   Boom boom = (Boom)StreamUtility.DeserializeFromStream(stream);
-
-            _boomCatalogContainer.SetBoomCatalog(boom);*/
              _customTaskPane = Globals.ThisAddIn.CustomTaskPanes.Add(_boomCatalogContainer, "JJ Boom");
             _customTaskPane.Width = 480;
             _customTaskPane.Visible = false;                       

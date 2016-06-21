@@ -83,5 +83,7 @@ namespace ChartCenter.WPFViewModel
             }
         }
 
+        public Action<BoomCatalogViewModel> DeleteThisCatalogViewModel { get; set; }
+
     }
 }

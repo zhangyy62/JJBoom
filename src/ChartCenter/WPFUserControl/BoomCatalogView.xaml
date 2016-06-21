@@ -20,7 +20,7 @@
                 <MenuItem Header="Add to this Catalog" Click="OnAddToThisCatalogClick" />
 
                 <MenuItem Header="Export Catalog" Click="ExportCatalog_OnClick" />
-                <MenuItem Header="Delete Catalog" Click="MenuItem_OnClick" />
+                <MenuItem Header="Delete Catalog" Click="DeleteCatalog_OnClick" />
             </ContextMenu>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Themes/Metro/Metro.MSControls.Core.Implicit.xaml" />

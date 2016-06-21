@@ -21,16 +21,14 @@ namespace ChartCenter
 {
     public partial class BoomCatalogContainer : UserControl
     {
-      
+        private BoomCatalogContainerViewModel _boomCatalogContainerViewModel;
 
         public BoomCatalogContainer()
         {
             InitializeComponent();
             BoomCatalogContainerView boomCatalogContainerView = this.elementHost1.Child as BoomCatalogContainerView;
             BoomCatalogContainerViewModel boomCatalogContainerViewModel = new BoomCatalogContainerViewModel();
-      
-          
-         
+        
             var files = Directory.GetFiles(UserInfoStorage.GetCurrentJJBoomDocumentFolderPath(), "*.jjb");
             foreach (string file in files)
             {
@@ -46,13 +44,20 @@ namespace ChartCenter
                 }
 
                 boomCatalogViewModel.BoomCatalogName = boomCatalog.BoomCatalogName;
+                boomCatalogViewModel.DeleteThisCatalogViewModel = DeleteThisCatalogViewModel;
                 boomCatalogContainerViewModel.BoomCatalogViewModels.Add(boomCatalogViewModel);
             }     
             boomCatalogContainerView.DataContext = boomCatalogContainerViewModel;
+            _boomCatalogContainerViewModel = boomCatalogContainerViewModel;
             GlobalBoomCatalogs.GetInstance().BoomCatalogViewModels = boomCatalogContainerViewModel.BoomCatalogViewModels;
         }
 
-   
+        private void DeleteThisCatalogViewModel(BoomCatalogViewModel boomCatalogViewModel)
+        {
+            _boomCatalogContainerViewModel.BoomCatalogViewModels.Remove(boomCatalogViewModel);
+            File.Delete(UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.BoomCatalogName + ".jjb"); 
+        }
+
         public IEnumerable<BoomCatalogViewModel> GetAllBoomCatalogViewModel()
         {
             BoomCatalogContainerView boomCatalogContainerView = this.elementHost1.Child as BoomCatalogContainerView;

@@ -30,23 +30,33 @@ namespace ChartCenter.WPFUserControl
             InitializeComponent();
           
         }
- 
 
         private void AddCatalog_OnClick(object sender, RoutedEventArgs e)
         {
             BoomCatalogViewModel newBoomCatalogViewModel = new BoomCatalogViewModel();
             newBoomCatalogViewModel.BoomCatalogName = GetAvailableCatalogName("New Catalog");
+            newBoomCatalogViewModel.DeleteThisCatalogViewModel = DeleteThisCatalogViewModel;
             BoomCatalogContainerViewModel boomCatalogContainerViewModel = this.DataContext as BoomCatalogContainerViewModel;
             boomCatalogContainerViewModel.BoomCatalogViewModels.Add(newBoomCatalogViewModel);
             MemoryStream stream = BoomWriter.SerializeToStream(BoomCatalogConvert.ConvertToBoomsCatalog(newBoomCatalogViewModel));
             BoomWriter.StreamToFile(stream, UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + newBoomCatalogViewModel.BoomCatalogName + ".jjb");
         }
 
+        private void DeleteThisCatalogViewModel(BoomCatalogViewModel boomCatalogViewModel)
+        {
+            BoomCatalogContainerViewModel boomCatalogContainerViewModel = this.DataContext as BoomCatalogContainerViewModel;
+            boomCatalogContainerViewModel.BoomCatalogViewModels.Remove(boomCatalogViewModel);
+            File.Delete(UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.BoomCatalogName + ".jjb");
+        }
+
         private void DeleteCatalog_OnClick(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = sender as MenuItem;
             BoomCatalogContainerViewModel boomCatalogViewModel = menuItem.DataContext as BoomCatalogContainerViewModel;
-            boomCatalogViewModel.BoomCatalogViewModels.Remove(boomCatalogViewModel.SelectedBoomCatalogViewModel);
+            if (MessageBox.Show("Delete", "Delete Catalog", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                boomCatalogViewModel.BoomCatalogViewModels.Remove(boomCatalogViewModel.SelectedBoomCatalogViewModel);
+            }
         }
 
         private void ExportCatalog_OnClick(object sender, RoutedEventArgs e)

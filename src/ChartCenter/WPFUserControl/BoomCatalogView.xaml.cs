@@ -20,6 +20,7 @@ using Microsoft.Office.Interop.PowerPoint;
 using Clipboard = System.Windows.Forms.Clipboard;
 using Image = System.Drawing.Image;
 using MenuItem = System.Windows.Controls.MenuItem;
+using MessageBox = System.Windows.MessageBox;
 using Shape = System.Windows.Shapes.Shape;
 using UserControl = System.Windows.Controls.UserControl;
 using View = Microsoft.Office.Interop.PowerPoint.View;
@@ -40,20 +41,21 @@ namespace ChartCenter.WPFUserControl
 
         public Boom InternalBoom { get; set; }
 
-        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        private void DeleteCatalog_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            MenuItem menuItem = sender as MenuItem;
+            BoomCatalogViewModel boomCatalogViewModel = menuItem.DataContext as BoomCatalogViewModel;
+            if (MessageBox.Show(string.Format("Delete Catalog {0}", boomCatalogViewModel.BoomCatalogName), "Delete Catalog", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                boomCatalogViewModel.DeleteThisCatalogViewModel.Invoke(boomCatalogViewModel);
+            }
         }
-
 
         private void ExportCatalog_OnClick(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = sender as MenuItem;
             BoomCatalogViewModel boomCatalogViewModel = menuItem.DataContext as BoomCatalogViewModel;
-            if (boomCatalogViewModel != null)
-            {
-                boomCatalogViewModel.ExportCatalog();
-            }
+            
         }
 
         private void OnAddToThisCatalogClick(object sender, RoutedEventArgs e)
