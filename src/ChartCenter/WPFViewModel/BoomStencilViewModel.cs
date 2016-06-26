@@ -74,6 +74,22 @@ namespace ChartCenter.WPFViewModel
             }
         }
 
+        private bool _textEnabled;
+
+        public bool TextEnabled
+        {
+            get
+            {
+                return _textEnabled;
+            }
+
+            set
+            {
+                _textEnabled = value;
+                this.RaisePropertyChanged("TextEnabled");
+            }
+        }
+
         public void SetCurrentViewModelByBoom(Boom boom)
         {
             _boom = boom;

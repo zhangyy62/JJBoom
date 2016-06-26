@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ChartCenter.WPFViewModel;
 
 namespace ChartCenter.WPFUserControl
 {
@@ -23,6 +24,38 @@ namespace ChartCenter.WPFUserControl
         public BoomStencilView()
         {
             InitializeComponent();
+        }
+
+        private void UIElement_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var textBox = sender as TextBox;
+                textBox.IsEnabled = false;
+                e.Handled = true;
+            }
+            e.Handled = false;
+        }
+
+        private void UIElement_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            textBox.IsEnabled = false;
+            e.Handled = true;
+        }
+
+
+        private void UIElement_OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if ((bool)e.NewValue)
+            {
+                textBox.Focus();
+
+                textBox.SelectAll();
+                textBox.Background = Brushes.White;
+            }
+            textBox.Background = Brushes.Transparent;
         }
     }
 }

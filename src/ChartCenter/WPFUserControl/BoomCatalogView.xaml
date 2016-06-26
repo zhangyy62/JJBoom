@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChartCenter.WPFUserControl"
+            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:wpfViewModel="clr-namespace:ChartCenter.WPFViewModel"
              mc:Ignorable="d" 
               Width="auto" Height="auto" HorizontalAlignment="Stretch">
 
 
     <UserControl.Resources>
-    
+
         <ResourceDictionary>
 
             <Style x:Key="itemstyle" TargetType="{x:Type ListBoxItem}">
@@ -18,30 +19,37 @@
             </Style>
             <ContextMenu x:Key="ContextMenu">
                 <MenuItem Header="Add to this Catalog" Click="OnAddToThisCatalogClick" />
-
-                <MenuItem Header="Export Catalog" Click="ExportCatalog_OnClick" />
+                <MenuItem Header="Rename this Catalog" Click="OnRenameCatalogClick" />
+              <!--  <MenuItem Header="Export Catalog" Click="ExportCatalog_OnClick" />-->
                 <MenuItem Header="Delete Catalog" Click="DeleteCatalog_OnClick" />
+            </ContextMenu>
+            <ContextMenu x:Key="StencilMenu">
+                <MenuItem Header="Rename this stencil" Click="OnRenameStencilClick" />
+                <!--  <MenuItem Header="Export Catalog" Click="ExportCatalog_OnClick" />-->
+                <MenuItem Header="Delete stencil" Click="OnDeleteStencilClick" />
             </ContextMenu>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Themes/Metro/Metro.MSControls.Core.Implicit.xaml" />
                 <ResourceDictionary Source="../Themes/Metro/Styles.WPF.xaml" />
                 <ResourceDictionary Source="../Themes/Metro/Metro.MSControls.Toolkit.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
-         
+
         </ResourceDictionary>
-     
+
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch"  Width="auto">
-        <Expander IsExpanded="True"  Height="auto" Style="{StaticResource ExpanderStyle}" ContextMenu="{StaticResource ContextMenu}" Header="{Binding BoomCatalogName, Mode=TwoWay}"  HorizontalAlignment="Stretch"   Background="CadetBlue"  Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BoomCatalogContainerView}}}"   >
-            <ListBox  ItemContainerStyle="{StaticResource itemstyle}" ItemsSource="{Binding BoomStencilViewModels, Mode=TwoWay}"   VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Expander ContextMenu="{StaticResource ContextMenu}"  IsExpanded="True"  Height="auto" Style="{StaticResource ExpanderStyle}"   HorizontalAlignment="Stretch"  Foreground="{x:Null}"  Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BoomCatalogContainerView}}}" Background="#FF94EA87" BorderBrush="{x:Null}"   >
+            <Expander.Header >
+                <TextBox  IsEnabled="{Binding HeaderEnabled, Mode=TwoWay}"  IsEnabledChanged="UIElement_OnIsEnabledChanged"  KeyDown="UIElement_OnKeyDown" LostFocus="UIElement_OnLostFocus"  Text="{Binding BoomCatalogName, Mode=TwoWay}" Foreground="Black" BorderBrush="{x:Null}"  SelectionBrush="#FF2C4FC3" Background="{x:Null}"/>
+            </Expander.Header>
+            <ListBox  ItemContainerStyle="{StaticResource itemstyle}" ItemsSource="{Binding BoomStencilViewModels, Mode=TwoWay}"   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{x:Null}">
                 <ListBox.ItemTemplate>
                     <DataTemplate  DataType="{x:Type wpfViewModel:BoomStencilViewModel}">
-                        <local:BoomStencilView  />
+                        <local:BoomStencilView ContextMenu="{StaticResource StencilMenu}" />
                     </DataTemplate>
-                    
                 </ListBox.ItemTemplate>
-                  <ListBox.ItemsPanel>
+                <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel   />
                     </ItemsPanelTemplate>

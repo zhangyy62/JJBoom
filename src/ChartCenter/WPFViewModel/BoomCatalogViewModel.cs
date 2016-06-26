@@ -47,6 +47,22 @@ namespace ChartCenter.WPFViewModel
             }
        }
 
+        private bool _headerEnabled;
+
+        public bool HeaderEnabled
+        {
+            get
+            {
+                return _headerEnabled; 
+                
+            }
+            set
+            {
+                _headerEnabled = value;
+                this.RaisePropertyChanged("HeaderEnabled");
+            }
+        }
+
         public void SetCurrentBoomCatalog(IEnumerable<BoomCatalog> boomCatalogs)
         {
             foreach (BoomCatalog boomCatalog in boomCatalogs)

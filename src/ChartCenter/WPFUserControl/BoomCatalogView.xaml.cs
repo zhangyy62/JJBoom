@@ -17,11 +17,14 @@ using System.Windows.Navigation;
 using ChartCenter.WPFViewModel;
 using JJBoom.Core;
 using Microsoft.Office.Interop.PowerPoint;
+using Brush = System.Drawing.Brush;
 using Clipboard = System.Windows.Forms.Clipboard;
 using Image = System.Drawing.Image;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MenuItem = System.Windows.Controls.MenuItem;
 using MessageBox = System.Windows.MessageBox;
 using Shape = System.Windows.Shapes.Shape;
+using TextBox = System.Windows.Controls.TextBox;
 using UserControl = System.Windows.Controls.UserControl;
 using View = Microsoft.Office.Interop.PowerPoint.View;
 
@@ -116,6 +119,67 @@ namespace ChartCenter.WPFUserControl
             DocumentWindow documentWindow = Globals.ThisAddIn.Application.ActiveWindow;
             View view = documentWindow.View;
             view.Paste();
+        }
+
+
+        private void OnRenameCatalogClick(object sender, RoutedEventArgs e)
+        {
+            BoomCatalogViewModel boomCatalogViewModel = this.DataContext as BoomCatalogViewModel;
+            boomCatalogViewModel.HeaderEnabled = true;
+       
+
+        }
+
+        private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = true;
+          
+        }
+
+        private void UIElement_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            textBox.IsEnabled = false;
+            e.Handled = true;  
+        }
+
+        private void UIElement_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var textBox = sender as TextBox;
+                textBox.IsEnabled = false;
+                e.Handled = true;
+            }
+            e.Handled = false;
+        }
+
+        private void UIElement_OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if ((bool)e.NewValue)
+            {
+                textBox.Focus();
+            
+                textBox.SelectAll();
+                textBox.Background = Brushes.White;
+            }
+            textBox.Background = Brushes.Transparent;
+        }
+
+        private void OnRenameStencilClick(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = sender as MenuItem;
+            BoomStencilViewModel boomStencilViewModel = menuItem.DataContext as BoomStencilViewModel;
+            boomStencilViewModel.TextEnabled = true;
+        }
+
+        private void OnDeleteStencilClick(object sender, RoutedEventArgs e)
+        {
+            BoomCatalogViewModel boomCatalogViewModel = this.DataContext as BoomCatalogViewModel;
+            BoomStencilViewModel boomStencilViewModel = sender as BoomStencilViewModel;
+            boomCatalogViewModel.BoomStencilViewModels.Remove(boomStencilViewModel);
         }
     }
 }

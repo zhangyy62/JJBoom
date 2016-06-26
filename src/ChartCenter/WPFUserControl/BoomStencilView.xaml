@@ -16,16 +16,17 @@
 
                 <ResourceDictionary Source="../Themes/Metro/Metro.MSControls.Toolkit.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
+        
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Image Width="40" Height="40" Stretch="Uniform"  Source="{Binding ImageSource, Mode=TwoWay}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="0" />
-        <TextBox TextWrapping="Wrap" VerticalAlignment="Stretch"  Background="{x:Null}" Text="{Binding Text, Mode=TwoWay}" HorizontalAlignment="Stretch"  Grid.Column="1" >
+        <TextBox   IsEnabled="{Binding TextEnabled, Mode=TwoWay}" IsEnabledChanged="UIElement_OnIsEnabledChanged" KeyDown="UIElement_OnKeyDown" LostFocus="UIElement_OnLostFocus" TextWrapping="Wrap" VerticalAlignment="Stretch"  Background="{x:Null}" Text="{Binding Text, Mode=TwoWay}" HorizontalAlignment="Stretch"  Grid.Column="1" >
          
         </TextBox>
         
