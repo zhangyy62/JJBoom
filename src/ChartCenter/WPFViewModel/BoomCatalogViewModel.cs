@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using JJBoom.Core;
  
@@ -60,6 +61,23 @@ namespace ChartCenter.WPFViewModel
             {
                 _headerEnabled = value;
                 this.RaisePropertyChanged("HeaderEnabled");
+            }
+        }
+
+        private Visibility  _userDefinedVisibility = Visibility.Visible;
+
+        public Visibility UserDefinedVisibility
+        {
+            get
+            {
+                return _userDefinedVisibility;
+                
+            }
+
+            set
+            {
+                _userDefinedVisibility = value;
+                this.RaisePropertyChanged("UserDefinedVisibility");
             }
         }
 
