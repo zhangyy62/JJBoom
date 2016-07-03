@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -89,6 +90,44 @@ namespace ChartCenter.WPFViewModel
                 this.RaisePropertyChanged("TextEnabled");
             }
         }
+
+
+        private Visibility _disPlayStencilNameVisibility = Visibility.Visible;
+
+        public Visibility DisPlayStencilNameVisibility
+        {
+            get
+            {
+                return _disPlayStencilNameVisibility;
+
+            }
+
+            set
+            {
+                _disPlayStencilNameVisibility = value;
+                this.RaisePropertyChanged("DisPlayStencilNameVisibility");
+            }
+        }
+
+        private Visibility _renameStencilNameVisibility = Visibility.Collapsed;
+
+        public Visibility RenameStencilNameVisibility
+        {
+            get
+            {
+                return _renameStencilNameVisibility;
+
+            }
+
+            set
+            {
+                _renameStencilNameVisibility = value;
+             
+                this.RaisePropertyChanged("RenameStencilNameVisibility");
+            }
+        }
+
+        public Action FocusAndSelectAll { get; set; } 
 
         public void SetCurrentViewModelByBoom(Boom boom)
         {

@@ -7,8 +7,7 @@
                xmlns:wpfViewModel="clr-namespace:ChartCenter.WPFViewModel"
         
              mc:Ignorable="d"   Width="150" Height="40">
-    
-    
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,7 +15,7 @@
 
                 <ResourceDictionary Source="../Themes/Metro/Metro.MSControls.Toolkit.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        
+
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -26,9 +25,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Image Width="40" Height="40" Stretch="Uniform"  Source="{Binding ImageSource, Mode=TwoWay}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Column="0" />
-        <TextBox   IsEnabled="{Binding TextEnabled, Mode=TwoWay}" IsEnabledChanged="UIElement_OnIsEnabledChanged" KeyDown="UIElement_OnKeyDown" LostFocus="UIElement_OnLostFocus" TextWrapping="Wrap" VerticalAlignment="Stretch"  Background="{x:Null}" Text="{Binding Text, Mode=TwoWay}" HorizontalAlignment="Stretch"  Grid.Column="1" >
-         
-        </TextBox>
-        
+        <TextBlock   Visibility="{Binding DisPlayStencilNameVisibility, Mode=TwoWay}" Grid.Column="1" TextWrapping="Wrap"  FontSize="15" TextTrimming="CharacterEllipsis" HorizontalAlignment="Stretch" TextAlignment="Left" Text="{Binding Text, Mode=TwoWay}"></TextBlock>
+        <TextBox Grid.Column="1" Loaded="FrameworkElement_OnLoaded"  Name="RenameStencilTextbox"  Visibility="{Binding RenameStencilNameVisibility, Mode=TwoWay}" VerticalContentAlignment="Center"     KeyDown="UIElement_OnKeyDown" LostFocus="UIElement_OnLostFocus" TextWrapping="Wrap" VerticalAlignment="Stretch"  Background="White"  Text="{Binding Text, Mode=TwoWay}" HorizontalAlignment="Stretch"    BorderBrush="{x:Null}" />
     </Grid>
 </UserControl>

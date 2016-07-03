@@ -40,6 +40,7 @@ namespace ChartCenter.WPFUserControl
         public BoomCatalogView()
         {
             InitializeComponent();
+        
         }
 
         public Boom InternalBoom { get; set; }
@@ -126,53 +127,42 @@ namespace ChartCenter.WPFUserControl
         {
             BoomCatalogViewModel boomCatalogViewModel = this.DataContext as BoomCatalogViewModel;
             boomCatalogViewModel.HeaderEnabled = true;
-       
-
-        }
-
-        private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            e.Handled = true;
-          
+            boomCatalogViewModel.DisplayHeaderVisibility = Visibility.Collapsed;
+            boomCatalogViewModel.RenameTextBoxVisibility = Visibility.Visible;
+            RenameTextBox.SelectAll();
+            RenameTextBox.Focus();
         }
 
         private void UIElement_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            var textBox = sender as TextBox;
-            textBox.IsEnabled = false;
-            e.Handled = true;  
+            BoomCatalogViewModel boomCatalogViewModel = this.DataContext as BoomCatalogViewModel;
+            boomCatalogViewModel.RenameTextBoxVisibility = Visibility.Collapsed;
+            boomCatalogViewModel.DisplayHeaderVisibility = Visibility.Visible;
+            e.Handled = false;  
         }
 
         private void UIElement_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                var textBox = sender as TextBox;
-                textBox.IsEnabled = false;
-                e.Handled = true;
+                BoomCatalogViewModel boomCatalogViewModel = this.DataContext as BoomCatalogViewModel;
+                boomCatalogViewModel.RenameTextBoxVisibility = Visibility.Collapsed;
+                boomCatalogViewModel.DisplayHeaderVisibility = Visibility.Visible;
+  
             }
-            e.Handled = false;
+                e.Handled = false;     
         }
-
-        private void UIElement_OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            if ((bool)e.NewValue)
-            {
-                textBox.Focus();
-            
-                textBox.SelectAll();
-                textBox.Background = Brushes.White;
-            }
-            textBox.Background = Brushes.Transparent;
-        }
+ 
 
         private void OnRenameStencilClick(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = sender as MenuItem;
             BoomStencilViewModel boomStencilViewModel = menuItem.DataContext as BoomStencilViewModel;
-            boomStencilViewModel.TextEnabled = true;
+            boomStencilViewModel.RenameStencilNameVisibility = Visibility.Visible;
+            boomStencilViewModel.DisPlayStencilNameVisibility = Visibility.Collapsed;
+            StencilListBox.Focus();
+            boomStencilViewModel.FocusAndSelectAll.Invoke();
+          
         }
 
         private void OnDeleteStencilClick(object sender, RoutedEventArgs e)

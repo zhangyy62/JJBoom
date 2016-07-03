@@ -64,7 +64,7 @@ namespace ChartCenter.WPFViewModel
             }
         }
 
-        private Visibility  _userDefinedVisibility = Visibility.Visible;
+        private Visibility _userDefinedVisibility = Visibility.Visible;
 
         public Visibility UserDefinedVisibility
         {
@@ -78,6 +78,40 @@ namespace ChartCenter.WPFViewModel
             {
                 _userDefinedVisibility = value;
                 this.RaisePropertyChanged("UserDefinedVisibility");
+            }
+        }
+
+        private Visibility _renameTextBoxVisibility = Visibility.Collapsed;
+
+        public Visibility RenameTextBoxVisibility
+        {
+            get
+            {
+                return _renameTextBoxVisibility;
+
+            }
+
+            set
+            {
+                _renameTextBoxVisibility = value;
+                this.RaisePropertyChanged("RenameTextBoxVisibility");
+            }
+        }
+
+        private Visibility _displayHeaderVisibility = Visibility.Visible;
+
+        public Visibility DisplayHeaderVisibility
+        {
+            get
+            {
+                return _displayHeaderVisibility;
+
+            }
+
+            set
+            {
+                _displayHeaderVisibility = value;
+                this.RaisePropertyChanged("DisplayHeaderVisibility");
             }
         }
 

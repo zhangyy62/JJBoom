@@ -30,32 +30,34 @@ namespace ChartCenter.WPFUserControl
         {
             if (e.Key == Key.Enter)
             {
-                var textBox = sender as TextBox;
-                textBox.IsEnabled = false;
-                e.Handled = true;
+                BoomStencilViewModel stencilViewModel = this.DataContext as BoomStencilViewModel;
+                stencilViewModel.RenameStencilNameVisibility = Visibility.Collapsed;
+                stencilViewModel.DisPlayStencilNameVisibility = Visibility.Visible;
+
             }
             e.Handled = false;
         }
 
         private void UIElement_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            var textBox = sender as TextBox;
-            textBox.IsEnabled = false;
-            e.Handled = true;
+            BoomStencilViewModel stencilViewModel = this.DataContext as BoomStencilViewModel;
+            stencilViewModel.RenameStencilNameVisibility = Visibility.Collapsed;
+            stencilViewModel.DisPlayStencilNameVisibility = Visibility.Visible;
+            e.Handled = false;
         }
 
-
-        private void UIElement_OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var textBox = sender as TextBox;
-            if ((bool)e.NewValue)
-            {
-                textBox.Focus();
+            BoomStencilViewModel stencilViewModel = this.DataContext as BoomStencilViewModel;
+            stencilViewModel.FocusAndSelectAll = FocusAndSelectAll;
+            e.Handled = false;
+        }
 
-                textBox.SelectAll();
-                textBox.Background = Brushes.White;
-            }
-            textBox.Background = Brushes.Transparent;
+        private void FocusAndSelectAll()
+        {
+            Console.WriteLine(Parent);
+            RenameStencilTextbox.SelectAll();
+            RenameStencilTextbox.Focus();
         }
     }
 }

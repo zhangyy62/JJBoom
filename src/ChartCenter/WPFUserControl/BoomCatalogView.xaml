@@ -7,7 +7,7 @@
             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:wpfViewModel="clr-namespace:ChartCenter.WPFViewModel"
              mc:Ignorable="d" 
-              Width="auto" Height="auto" HorizontalAlignment="Stretch">
+              Width="auto" Height="auto" HorizontalAlignment="Stretch" >
     <UserControl.DataContext>
         <wpfViewModel:BoomCatalogViewModel></wpfViewModel:BoomCatalogViewModel>
     </UserControl.DataContext>
@@ -38,14 +38,19 @@
     </UserControl.Resources>
 
     <Grid HorizontalAlignment="Stretch"  Width="auto">
-        <Expander ContextMenu="{StaticResource ContextMenu}"  IsExpanded="True"  Height="auto" Style="{StaticResource ExpanderStyle}"   HorizontalAlignment="Stretch"  Foreground="{x:Null}"  Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BoomCatalogContainerView}}}" Background="#FF94EA87" BorderBrush="{x:Null}"   >
+        <Expander ContextMenu="{StaticResource ContextMenu}" IsExpanded="True"  Height="auto" Style="{StaticResource ExpanderStyle}"   HorizontalAlignment="Stretch"  Foreground="{x:Null}"  Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BoomCatalogContainerView}}}" Background="#FF94EA87" BorderBrush="{x:Null}"   >
             <Expander.Header >
-                <DockPanel HorizontalAlignment="Stretch">
-                    <TextBox DockPanel.Dock="Left"   IsEnabled="{Binding HeaderEnabled, Mode=TwoWay}"  IsEnabledChanged="UIElement_OnIsEnabledChanged"  KeyDown="UIElement_OnKeyDown" LostFocus="UIElement_OnLostFocus"  Text="{Binding BoomCatalogName, Mode=TwoWay}" Foreground="Black" BorderBrush="{x:Null}"  SelectionBrush="#FF2C4FC3" Background="{x:Null}"/>
-                    <TextBlock DockPanel.Dock="Right"  Width="90" Visibility="{Binding UserDefinedVisibility, Mode=TwoWay}" VerticalAlignment="Center" Text="User-Defined" Foreground="Black"></TextBlock>
-                </DockPanel>
+                <Grid MaxWidth="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}}">
+                   <Grid.ColumnDefinitions>
+                       <ColumnDefinition Width="*"/>
+                       <ColumnDefinition Width="90"/>
+                   </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" FontStyle="Italic" Name="DisplayUserDefinedTextBlock"  HorizontalAlignment="Right"  Width="90" Visibility="{Binding UserDefinedVisibility, Mode=TwoWay}" VerticalAlignment="Center" Text="User-Defined" Foreground="Black"/>
+                    <TextBlock Grid.Column="0"   TextWrapping="NoWrap"  Width="auto"  TextTrimming="CharacterEllipsis"  HorizontalAlignment="Stretch" TextAlignment="Left"  Text="{Binding BoomCatalogName, Mode=TwoWay}" Foreground="Black"   Background="{x:Null}"/>
+                    <TextBox Grid.ColumnSpan="2" Grid.Column="0" Name="RenameTextBox" Visibility="{Binding RenameTextBoxVisibility, Mode=TwoWay}" HorizontalAlignment="Stretch" KeyDown="UIElement_OnKeyDown"  LostFocus="UIElement_OnLostFocus"  Text="{Binding BoomCatalogName, Mode=TwoWay}" Foreground="Black" BorderBrush="{x:Null}"  SelectionBrush="#FF2C4FC3" Background="White"/>
+                </Grid>
             </Expander.Header>
-            <ListBox  ItemContainerStyle="{StaticResource itemstyle}" ItemsSource="{Binding BoomStencilViewModels, Mode=TwoWay}"   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{x:Null}">
+            <ListBox Name="StencilListBox" Width="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BoomCatalogContainerView}}}"  ItemContainerStyle="{StaticResource itemstyle}" ItemsSource="{Binding BoomStencilViewModels, Mode=TwoWay}"   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{x:Null}">
                 <ListBox.ItemTemplate>
                     <DataTemplate  DataType="{x:Type wpfViewModel:BoomStencilViewModel}">
                         <local:BoomStencilView ContextMenu="{StaticResource StencilMenu}" />
@@ -53,7 +58,7 @@
                 </ListBox.ItemTemplate>
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel   />
+                        <WrapPanel  />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
