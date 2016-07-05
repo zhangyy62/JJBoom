@@ -15,7 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using ChartCenter.WPFViewModel;
+using JJBoom;
 using JJBoom.Core;
+using JJBoom.Core.Files;
 using Microsoft.Office.Interop.PowerPoint;
 using Brush = System.Drawing.Brush;
 using Clipboard = System.Windows.Forms.Clipboard;
@@ -40,7 +42,6 @@ namespace ChartCenter.WPFUserControl
         public BoomCatalogView()
         {
             InitializeComponent();
-        
         }
 
         public Boom InternalBoom { get; set; }
@@ -59,7 +60,7 @@ namespace ChartCenter.WPFUserControl
         {
             MenuItem menuItem = sender as MenuItem;
             BoomCatalogViewModel boomCatalogViewModel = menuItem.DataContext as BoomCatalogViewModel;
-            
+            boomCatalogViewModel.ExportCatalog();
         }
 
         private void OnAddToThisCatalogClick(object sender, RoutedEventArgs e)
@@ -138,6 +139,11 @@ namespace ChartCenter.WPFUserControl
             BoomCatalogViewModel boomCatalogViewModel = this.DataContext as BoomCatalogViewModel;
             boomCatalogViewModel.RenameTextBoxVisibility = Visibility.Collapsed;
             boomCatalogViewModel.DisplayHeaderVisibility = Visibility.Visible;
+            TextBox textBox = e.Source as TextBox;
+            string newName = FileNameHelper.GetAvailableCatalogName(textBox.Text);
+            MemoryStream stream = BoomWriter.SerializeToStream(BoomCatalogConvert.ConvertToBoomsCatalog(boomCatalogViewModel));
+            BoomWriter.StreamToFile(stream, UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.BoomCatalogName + ".jjb");
+            FileHelper.RenameFile(boomCatalogViewModel.BoomCatalogName, FileNameHelper.GetAvailableFileName(newName));
             e.Handled = false;  
         }
 
