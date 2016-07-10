@@ -12,12 +12,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using ChartCenter.WPFUserControl;
-using ChartCenter.WPFViewModel;
 using JJBoom.Core;
  
 
-namespace ChartCenter
+namespace JJBoom
 {
     public partial class BoomCatalogContainer : UserControl
     {

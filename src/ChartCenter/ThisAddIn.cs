@@ -1,21 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-using PowerPoint = Microsoft.Office.Interop.PowerPoint;
-using Office = Microsoft.Office.Core;
+﻿
+using System;
+using System.IO;
+using JJBoom.Core;
+using Microsoft.Office.Interop.PowerPoint;
 
-namespace ChartCenter
+namespace JJBoom
 {
     public partial class ThisAddIn
     {
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            Globals.ThisAddIn.Application.PresentationSave += ApplicationOnPresentationSave;
+        }
+
+        private void ApplicationOnPresentationSave(Presentation pres)
+        {
+            foreach (BoomCatalogViewModel boomCatalogViewModel in GlobalBoomCatalogs.GetInstance().BoomCatalogViewModels)
+            {
+                MemoryStream stream = BoomWriter.SerializeToStream(BoomCatalogConvert.ConvertToBoomsCatalog(boomCatalogViewModel));
+                BoomWriter.StreamToFile(stream, UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.BoomCatalogName + ".jjb");
+            }
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
+
         }
 
         #region VSTO 生成的代码
@@ -29,7 +38,7 @@ namespace ChartCenter
             this.Startup += new System.EventHandler(ThisAddIn_Startup);
             this.Shutdown += new System.EventHandler(ThisAddIn_Shutdown);
         }
-        
+
         #endregion
     }
 }

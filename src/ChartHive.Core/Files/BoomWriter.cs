@@ -26,7 +26,6 @@ namespace JJBoom.Core
 
         public static void StreamToFile(Stream stream, string fileName)
         {
-
             using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
             {
                 stream.Seek(0, SeekOrigin.Begin);

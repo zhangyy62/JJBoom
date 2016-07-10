@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChartCenter.WPFViewModel
+namespace JJBoom
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {

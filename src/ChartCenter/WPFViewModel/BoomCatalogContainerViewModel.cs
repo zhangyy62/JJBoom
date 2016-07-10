@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using JJBoom.Core;
 
-namespace ChartCenter.WPFViewModel
+namespace JJBoom
 {
     public class BoomCatalogContainerViewModel : ViewModelBase
     {

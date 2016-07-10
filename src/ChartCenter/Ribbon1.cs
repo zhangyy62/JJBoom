@@ -11,7 +11,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Windows.Forms;
-using ChartCenter.WPFViewModel;
+ 
 using JJBoom.Core;
 using Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
@@ -22,7 +22,7 @@ using Shape = Microsoft.Office.Interop.PowerPoint.Shape;
 using ShapeRange = Microsoft.Office.Interop.PowerPoint.ShapeRange;
 using View = Microsoft.Office.Interop.PowerPoint.View;
 
-namespace ChartCenter
+namespace JJBoom
 {
     public partial class Ribbon1
     {
@@ -180,6 +180,9 @@ namespace ChartCenter
             _selectedCatalogName = selectedCatalogName;
         }
 
-        
+        private void Ribbon1_Close(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ChartCenter
+﻿namespace JJBoom
 {
     partial class BoomCatalogContainer
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this._boomCatalogContainerViewUserControl1 = new ChartCenter.WPFUserControl.BoomCatalogContainerView();
+            this._boomCatalogContainerViewUserControl1 = new JJBoom.BoomCatalogContainerView();
             this.SuspendLayout();
             // 
             // elementHost1
@@ -57,6 +57,6 @@
         #endregion
 
         private System.Windows.Forms.Integration.ElementHost elementHost1;
-        private WPFUserControl.BoomCatalogContainerView _boomCatalogContainerViewUserControl1;
+        private JJBoom.BoomCatalogContainerView _boomCatalogContainerViewUserControl1;
     }
 }

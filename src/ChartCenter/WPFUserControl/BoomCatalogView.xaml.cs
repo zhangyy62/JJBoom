@@ -11,10 +11,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using ChartCenter.WPFViewModel;
 using JJBoom;
 using JJBoom.Core;
 using JJBoom.Core.Files;
@@ -31,7 +27,7 @@ using UserControl = System.Windows.Controls.UserControl;
 using View = Microsoft.Office.Interop.PowerPoint.View;
 
 
-namespace ChartCenter.WPFUserControl
+namespace JJBoom
 {
     /// <summary>
     /// BoomCatalog.xaml 的交互逻辑
@@ -52,7 +48,9 @@ namespace ChartCenter.WPFUserControl
             BoomCatalogViewModel boomCatalogViewModel = menuItem.DataContext as BoomCatalogViewModel;
             if (MessageBox.Show(string.Format("Delete Catalog {0}", boomCatalogViewModel.BoomCatalogName), "Delete Catalog", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
+                FileHelper.DeleteFile(boomCatalogViewModel.BoomCatalogName);
                 boomCatalogViewModel.DeleteThisCatalogViewModel.Invoke(boomCatalogViewModel);
+               
             }
         }
 
@@ -77,7 +75,7 @@ namespace ChartCenter.WPFUserControl
                     shapeRange.Copy();
                     CustomTwoTuples<string, Stream> streamAndShapeDataFormat = ClipBoardDataProvider.GetStreamFromeClipboard();
                     Boom boom = new Boom();
-                    boom.Name = "测试";
+                    boom.Name = "New Stencil";
                     boom.Icon = Image.FromStream(ClipBoardDataProvider.GetPng());
                     boom.ShapeData = streamAndShapeDataFormat.GetRightOne();
                     boom.ShapeDataFormat = streamAndShapeDataFormat.GetLeftOne();
@@ -174,7 +172,8 @@ namespace ChartCenter.WPFUserControl
         private void OnDeleteStencilClick(object sender, RoutedEventArgs e)
         {
             BoomCatalogViewModel boomCatalogViewModel = this.DataContext as BoomCatalogViewModel;
-            BoomStencilViewModel boomStencilViewModel = sender as BoomStencilViewModel;
+            MenuItem menuItem = sender as MenuItem;
+            BoomStencilViewModel boomStencilViewModel = menuItem.DataContext as BoomStencilViewModel;
             boomCatalogViewModel.BoomStencilViewModels.Remove(boomStencilViewModel);
         }
     }

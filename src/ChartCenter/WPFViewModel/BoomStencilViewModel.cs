@@ -9,12 +9,11 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using ChartCenter.WPFUserControl;
 using JJBoom.Core;
 using Microsoft.Office.Interop.PowerPoint;
 using View = System.Windows.Forms.View;
 
-namespace ChartCenter.WPFViewModel
+namespace JJBoom
 {
     public class BoomStencilViewModel : ViewModelBase
     {
