@@ -48,7 +48,7 @@ namespace JJBoom
             BoomCatalogViewModel boomCatalogViewModel = menuItem.DataContext as BoomCatalogViewModel;
             if (MessageBox.Show(string.Format("Delete Catalog {0}", boomCatalogViewModel.BoomCatalogName), "Delete Catalog", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                FileHelper.DeleteFile(boomCatalogViewModel.BoomCatalogName);
+                FileHelper.DeleteFile(boomCatalogViewModel.FileName);
                 boomCatalogViewModel.DeleteThisCatalogViewModel.Invoke(boomCatalogViewModel);
                
             }
@@ -83,11 +83,11 @@ namespace JJBoom
                     boomStencilViewModel.SetCurrentViewModelByBoom(boom);
                     if (boomCatalogViewModel != null)
                     {
-                        boomCatalogViewModel.BoomStencilViewModels.Add(boomStencilViewModel);
+                        boomCatalogViewModel.AddStencil(boomStencilViewModel);
                     }
                    
                     MemoryStream stream = BoomWriter.SerializeToStream(BoomCatalogConvert.ConvertToBoomsCatalog(boomCatalogViewModel));
-                    BoomWriter.StreamToFile(stream,UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.BoomCatalogName + ".jjb");
+                    BoomWriter.StreamToFile(stream,UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.FileName + ".jjb");
                 }
             }
             finally
@@ -138,10 +138,10 @@ namespace JJBoom
             boomCatalogViewModel.RenameTextBoxVisibility = Visibility.Collapsed;
             boomCatalogViewModel.DisplayHeaderVisibility = Visibility.Visible;
             TextBox textBox = e.Source as TextBox;
-            string newName = FileNameHelper.GetAvailableCatalogName(textBox.Text);
+            boomCatalogViewModel.BoomCatalogName = textBox.Text;
             MemoryStream stream = BoomWriter.SerializeToStream(BoomCatalogConvert.ConvertToBoomsCatalog(boomCatalogViewModel));
-            BoomWriter.StreamToFile(stream, UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.BoomCatalogName + ".jjb");
-            FileHelper.RenameFile(boomCatalogViewModel.BoomCatalogName, FileNameHelper.GetAvailableFileName(newName));
+            BoomWriter.StreamToFile(stream, UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.FileName + ".jjb");
+       
             e.Handled = false;  
         }
 
@@ -175,6 +175,7 @@ namespace JJBoom
             MenuItem menuItem = sender as MenuItem;
             BoomStencilViewModel boomStencilViewModel = menuItem.DataContext as BoomStencilViewModel;
             boomCatalogViewModel.BoomStencilViewModels.Remove(boomStencilViewModel);
+            GlobalBoomCatalogsCache.GetInstance().AddChangedBoomCatalog(boomCatalogViewModel);
         }
     }
 }

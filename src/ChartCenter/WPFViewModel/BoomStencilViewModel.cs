@@ -58,7 +58,6 @@ namespace JJBoom
         {
             return _boom;
         }
- 
 
         public string Text
         {
@@ -89,7 +88,6 @@ namespace JJBoom
                 this.RaisePropertyChanged("TextEnabled");
             }
         }
-
 
         private Visibility _disPlayStencilNameVisibility = Visibility.Visible;
 
@@ -139,6 +137,7 @@ namespace JJBoom
             Text = boom.Name;
         }
 
+        public Action CurrentBoomStencilChanged { get; set; } 
 
         private static BitmapImage ToWpfImage(System.Drawing.Image img)
         {

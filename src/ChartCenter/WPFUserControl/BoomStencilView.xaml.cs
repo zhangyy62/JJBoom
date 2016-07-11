@@ -38,6 +38,7 @@ namespace JJBoom
             BoomStencilViewModel stencilViewModel = this.DataContext as BoomStencilViewModel;
             stencilViewModel.RenameStencilNameVisibility = Visibility.Collapsed;
             stencilViewModel.DisPlayStencilNameVisibility = Visibility.Visible;
+            stencilViewModel.CurrentBoomStencilChanged.Invoke();
             e.Handled = false;
         }
 

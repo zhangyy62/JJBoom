@@ -15,10 +15,10 @@ namespace JJBoom
 
         private void ApplicationOnPresentationSave(Presentation pres)
         {
-            foreach (BoomCatalogViewModel boomCatalogViewModel in GlobalBoomCatalogs.GetInstance().BoomCatalogViewModels)
+            foreach (BoomCatalogViewModel boomCatalogViewModel in GlobalBoomCatalogsCache.GetInstance().BoomCatalogViewModels)
             {
                 MemoryStream stream = BoomWriter.SerializeToStream(BoomCatalogConvert.ConvertToBoomsCatalog(boomCatalogViewModel));
-                BoomWriter.StreamToFile(stream, UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.BoomCatalogName + ".jjb");
+                BoomWriter.StreamToFile(stream, UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.FileName + ".jjb");
             }
         }
 

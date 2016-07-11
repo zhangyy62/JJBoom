@@ -160,7 +160,7 @@ namespace JJBoom
                     boom.ShapeDataFormat = streamAndShapeDataFormat.GetLeftOne();
                     BoomStencilViewModel boomStencilViewModel = new BoomStencilViewModel();
                     boomStencilViewModel.SetCurrentViewModelByBoom(boom);
-                    boomCatalogViewModel.BoomStencilViewModels.Add(boomStencilViewModel);
+                    boomCatalogViewModel.AddStencil(boomStencilViewModel);
 
                 }
             }
@@ -171,8 +171,6 @@ namespace JJBoom
                     Marshal.ReleaseComObject(selection);
                 }
             }
-          
-
         }
 
         private void GetSelectedCatalog(string selectedCatalogName)
@@ -182,7 +180,11 @@ namespace JJBoom
 
         private void Ribbon1_Close(object sender, EventArgs e)
         {
-            
+            foreach (BoomCatalogViewModel boomCatalogViewModel in GlobalBoomCatalogsCache.GetInstance().GetChangedBoomCatalogs())
+            {
+                MemoryStream stream = BoomWriter.SerializeToStream(BoomCatalogConvert.ConvertToBoomsCatalog(boomCatalogViewModel));
+                BoomWriter.StreamToFile(stream, UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.FileName + ".jjb");
+            }
         }
     }
 }

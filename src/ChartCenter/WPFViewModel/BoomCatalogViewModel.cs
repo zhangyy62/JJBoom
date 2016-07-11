@@ -115,15 +115,7 @@ namespace JJBoom
             }
         }
 
-        public void SetCurrentBoomCatalog(IEnumerable<BoomCatalog> boomCatalogs)
-        {
-            foreach (BoomCatalog boomCatalog in boomCatalogs)
-            {
-                BoomStencilViewModel boomStencilViewModel = new BoomStencilViewModel();
-
-                BoomStencilViewModels.Add(boomStencilViewModel);
-            }
-        }
+        public string FileName { get; set; }
 
         public void ExportCatalog()
         {
@@ -151,7 +143,20 @@ namespace JJBoom
             }
         }
 
+        public void AddStencil(BoomStencilViewModel boomStencilViewModel)
+        {
+            BoomStencilViewModels.Add(boomStencilViewModel);
+            boomStencilViewModel.CurrentBoomStencilChanged += AddToGlobalCatalogCache;
+        }
+
         public Action<BoomCatalogViewModel> DeleteThisCatalogViewModel { get; set; }
 
+        private void AddToGlobalCatalogCache()
+        {
+            if (!GlobalBoomCatalogsCache.GetInstance().GetChangedBoomCatalogs().Contains(this))
+            {
+                GlobalBoomCatalogsCache.GetInstance().AddChangedBoomCatalog(this);
+            }
+        }
     }
 }

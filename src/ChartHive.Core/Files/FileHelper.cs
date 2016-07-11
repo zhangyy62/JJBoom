@@ -18,9 +18,9 @@ namespace JJBoom.Core.Files
             Directory.Move(UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + oldName + ".jjb", UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + newName + ".jjb");
         }
 
-        public static void DeleteFile(string path)
+        public static void DeleteFile(string fileName)
         {
-            Directory.Delete(UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + path + ".jjb");
+            File.Delete(UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + fileName + ".jjb");
         }
     }
 }

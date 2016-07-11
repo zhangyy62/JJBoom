@@ -38,16 +38,17 @@ namespace JJBoom
                 {                 
                     BoomStencilViewModel boomStencilViewModel = new BoomStencilViewModel();
                     boomStencilViewModel.SetCurrentViewModelByBoom(boom);
-                    boomCatalogViewModel.BoomStencilViewModels.Add(boomStencilViewModel);
+                    boomCatalogViewModel.AddStencil(boomStencilViewModel);
                 }
 
                 boomCatalogViewModel.BoomCatalogName = boomCatalog.BoomCatalogName;
+                boomCatalogViewModel.FileName = Path.GetFileNameWithoutExtension(file);
                 boomCatalogViewModel.DeleteThisCatalogViewModel = DeleteThisCatalogViewModel;
                 boomCatalogContainerViewModel.BoomCatalogViewModels.Add(boomCatalogViewModel);
             }     
             boomCatalogContainerView.DataContext = boomCatalogContainerViewModel;
             _boomCatalogContainerViewModel = boomCatalogContainerViewModel;
-            GlobalBoomCatalogs.GetInstance().BoomCatalogViewModels = boomCatalogContainerViewModel.BoomCatalogViewModels;
+            GlobalBoomCatalogsCache.GetInstance().BoomCatalogViewModels = boomCatalogContainerViewModel.BoomCatalogViewModels;
         }
 
         private void DeleteThisCatalogViewModel(BoomCatalogViewModel boomCatalogViewModel)
