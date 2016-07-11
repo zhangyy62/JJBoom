@@ -32,5 +32,18 @@ namespace JJBoom.Core
                 stream.CopyTo(fs);
             }
         }
+
+        public static void StreamToNewFile(Stream stream, string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+            }
+            using (FileStream fs = new FileStream(fileName, FileMode.CreateNew))
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                stream.CopyTo(fs);
+            }
+        }
     }
 }

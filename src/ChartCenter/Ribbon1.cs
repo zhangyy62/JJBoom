@@ -40,79 +40,6 @@ namespace JJBoom
             _customTaskPane.Width = 480;
             _customTaskPane.Visible = false;                       
         }
-
-        private void button1_Click(object sender, RibbonControlEventArgs e)
-        {
-            DocumentWindow documentWindow = Globals.ThisAddIn.Application.ActiveWindow;
-            Selection selection = documentWindow.Selection;
-            if ((selection != null) && (selection.Type == PpSelectionType.ppSelectionShapes))
-            {
-                ShapeRange shapeRange = selection.HasChildShapeRange ? selection.ChildShapeRange : selection.ShapeRange;
-                Dictionary<Shape, string> dictionary = ShapeRangeDeCompose.smethod_1(shapeRange);
-                shapeRange.Copy();
-                CustomTwoTuples<string, Stream> streamAndShapeDataFormat = ClipBoardDataProvider.GetStreamFromeClipboard();
-                CustomTwoTuples<string, Stream> class2 = ClipBoardDataProvider.GetStreamFromeClipboard();
-                Boom boom = new Boom();
-                boom.Name = "张轩测试";
-                boom.Icon = Image.FromStream(ClipBoardDataProvider.GetPng());
-                boom.ShapeData = streamAndShapeDataFormat.GetRightOne();
-                boom.ShapeDataFormat = streamAndShapeDataFormat.GetLeftOne();
-                /*   using (FileStream sFile = new FileStream(@"C:\Users\rabook\Desktop\powermockup2.3.1\1.hidat", FileMode.OpenOrCreate))
-                   {
-                       sFile.Write(StreamToBytes(class2.GetRightOne()), 0, 0);
-                   }*/
-
-                MemoryStream stream = BoomWriter.SerializeToStream(boom);
-                Boom sd = (Boom)StreamUtility.DeserializeFromStream(stream);
-                //   Boom list = (Boom)serializer.ReadObject(stream);
-                BoomWriter.StreamToFile(stream, filepath);
-            }
-
-            /*       try
-                   {
-                       if ((shapeRange != null) && (shapeRange.Count > 0))
-                       {
-                           IStencil stencil = StencilCategoryHelper.smethod_3();
-                           if (stencil != null)
-                           {
-                            //   this.adxtaskPane_0.set_Visible(true);
-                              /* Application.DoEvents();
-                               StencilLib currentStencilLib = this.CurrentStencilLib;
-                               if (currentStencilLib != null)
-                               {
-                                   currentStencilLib.method_1(stencil);
-                               }#1#
-                           }
-                       }
-                       else
-                       {
-                          // Dialogs.ShowInfoMessage(Strings.ShapeSelectionRequired);
-                       }
-                   }
-                   finally
-                   {
-                       if (shapeRange != null)
-                       {
-                           Marshal.ReleaseComObject(shapeRange);
-                       }
-                   }*/
-        }
-
-        private void button2_Click(object sender, RibbonControlEventArgs e)
-        {
-            DocumentWindow documentWindow = Globals.ThisAddIn.Application.ActiveWindow;
-            View view = documentWindow.View;
-            view.Paste();
-        }
- 
-
-        private void button3_Click(object sender, RibbonControlEventArgs e)
-        {
-           MemoryStream stream = BoomReader.FileToStream(filepath);
-           Boom boom = (Boom)StreamUtility.DeserializeFromStream(stream);
-           Clipboard.SetDataObject(StencilDataConvert.ConvertToDataObject(boom.ShapeData, ClipBoardDataProvider.GVMLClipFormat));
-          
-        }
        
         private void ShowPanel_Click(object sender, RibbonControlEventArgs e)
         {
@@ -183,7 +110,7 @@ namespace JJBoom
             foreach (BoomCatalogViewModel boomCatalogViewModel in GlobalBoomCatalogsCache.GetInstance().GetChangedBoomCatalogs())
             {
                 MemoryStream stream = BoomWriter.SerializeToStream(BoomCatalogConvert.ConvertToBoomsCatalog(boomCatalogViewModel));
-                BoomWriter.StreamToFile(stream, UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.FileName + ".jjb");
+                BoomWriter.StreamToNewFile(stream, UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.FileName + ".jjb");
             }
         }
     }

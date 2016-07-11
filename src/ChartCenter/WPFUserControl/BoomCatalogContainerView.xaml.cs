@@ -30,6 +30,7 @@ namespace JJBoom
             BoomCatalogViewModel newBoomCatalogViewModel = new BoomCatalogViewModel();
             newBoomCatalogViewModel.BoomCatalogName = FileNameHelper.GetAvailableCatalogName("New Catalog");
             newBoomCatalogViewModel.DeleteThisCatalogViewModel = DeleteThisCatalogViewModel;
+            newBoomCatalogViewModel.FileName = newBoomCatalogViewModel.BoomCatalogName;
             BoomCatalogContainerViewModel boomCatalogContainerViewModel = this.DataContext as BoomCatalogContainerViewModel;
             boomCatalogContainerViewModel.BoomCatalogViewModels.Add(newBoomCatalogViewModel);
             MemoryStream stream = BoomWriter.SerializeToStream(BoomCatalogConvert.ConvertToBoomsCatalog(newBoomCatalogViewModel));
