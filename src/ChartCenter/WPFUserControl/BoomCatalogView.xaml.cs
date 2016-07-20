@@ -141,7 +141,8 @@ namespace JJBoom
             boomCatalogViewModel.BoomCatalogName = textBox.Text;
             MemoryStream stream = BoomWriter.SerializeToStream(BoomCatalogConvert.ConvertToBoomsCatalog(boomCatalogViewModel));
             BoomWriter.StreamToFile(stream, UserInfoStorage.GetCurrentJJBoomDocumentFolderPath() + boomCatalogViewModel.FileName + ".jjb");
-       
+            FileHelper.RenameFile(boomCatalogViewModel.FileName, FileNameHelper.GetAvailableFileName(boomCatalogViewModel.BoomCatalogName));
+            boomCatalogViewModel.FileName = boomCatalogViewModel.BoomCatalogName;
             e.Handled = false;  
         }
 
