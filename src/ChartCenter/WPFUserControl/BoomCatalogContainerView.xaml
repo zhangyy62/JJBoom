@@ -22,16 +22,6 @@
     </UserControl.Resources>
 
     <Grid ContextMenu="{StaticResource ContextMenu}" HorizontalAlignment="Stretch">
-        <!--     <Expander>
-            <ListBox Name="boomCatalogContainer"  >
-
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListBoxItem}"  >
-                        <EventSetter Event="MouseDoubleClick" Handler="Control_OnMouseDoubleClick"/>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-            </ListBox>
-        </Expander>-->
         <ListBox ItemTemplate="{StaticResource BoomCatalogTemplate}" SelectedItem="{Binding SelectedBoomCatalogViewModel}" ItemsSource="{Binding BoomCatalogViewModels, Mode=TwoWay}"  HorizontalAlignment="Stretch"/>
     </Grid>
 </UserControl>
