@@ -6,28 +6,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ChartHive.Core
+namespace JJBoom.Core
 {
-    public static class ClipBoardHelper
+    public static class ClipBoardDataProvider
     {
-        public static string string_0 = "Art::GVML ClipFormat";
-        public static string string_1 = "Art::Table ClipFormat";
+        public static string GVMLClipFormat = "Art::GVML ClipFormat";
+        public static string TableClipFormat = "Art::Table ClipFormat";
 
-        public static CustomTwoTuples<string, Stream> smethod_0()
+        public static CustomTwoTuples<string, Stream> GetStreamFromeClipboard()
         {
             IDataObject dataObject = Clipboard.GetDataObject();
-            if (dataObject.GetDataPresent(string_0))
+          
+            if (dataObject.GetDataPresent(GVMLClipFormat))
             {
-                return new CustomTwoTuples<string, Stream>(string_0, dataObject.GetData(string_0) as MemoryStream);
+                return new CustomTwoTuples<string, Stream>(GVMLClipFormat, dataObject.GetData(GVMLClipFormat) as MemoryStream);
             }
-            if (dataObject.GetDataPresent(string_1))
+            if (dataObject.GetDataPresent(TableClipFormat))
             {
-                return new CustomTwoTuples<string, Stream>(string_1, dataObject.GetData(string_1) as MemoryStream);
+                return new CustomTwoTuples<string, Stream>(TableClipFormat, dataObject.GetData(TableClipFormat) as MemoryStream);
             }
             return null;
         }
 
-        public static Stream smethod_1()
+        public static Stream GetPng()
         {
             return (Clipboard.GetDataObject().GetData("PNG") as MemoryStream);
         }

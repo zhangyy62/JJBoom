@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("JJBoom.Core")]
+[assembly: AssemblyTitle("JJBoom.UnitTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("JJBoom.Core")]
+[assembly: AssemblyProduct("JJBoom.UnitTest")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("62346b6e-0cd0-4e02-9452-a41998b55a67")]
+[assembly: Guid("34d4264e-3229-414a-8c8b-319b3f3c964e")]
 
 // 程序集的版本信息由下列四个值组成: 
 //

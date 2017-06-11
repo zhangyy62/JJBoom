@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="JJBoom.BoomCatalogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JJBoom"
+            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:wpfViewModel="clr-namespace:JJBoom"
+             mc:Ignorable="d" 
+              Width="auto" Height="auto" HorizontalAlignment="Stretch" >
+    
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <Style x:Key="itemstyle" TargetType="{x:Type ListBoxItem}">
+                <EventSetter Event="MouseDoubleClick" Handler="OnDoubleClickBoomStencilView" />
+            </Style>
+            <ContextMenu x:Key="ContextMenu">
+                <MenuItem Header="Add to this Catalog" Click="OnAddToThisCatalogClick" />
+                <MenuItem Header="Rename this Catalog" Click="OnRenameCatalogClick" />
+                <MenuItem Header="Export Catalog" Click="ExportCatalog_OnClick" />
+                <MenuItem Header="Delete Catalog" Click="DeleteCatalog_OnClick"   />
+            </ContextMenu>
+            <ContextMenu x:Key="StencilMenu">
+                <MenuItem Header="Rename this stencil" Click="OnRenameStencilClick" />
+                <!--  <MenuItem Header="Export Catalog" Click="ExportCatalog_OnClick" />-->
+                <MenuItem Header="Delete stencil" Click="OnDeleteStencilClick" />
+            </ContextMenu>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/Metro/Metro.MSControls.Core.Implicit.xaml" />
+                <ResourceDictionary Source="../Themes/Metro/Styles.WPF.xaml" />
+                <ResourceDictionary Source="../Themes/Metro/Metro.MSControls.Toolkit.Implicit.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid HorizontalAlignment="Stretch"  Width="auto">
+        <Expander x:Name="expander" ContextMenu="{StaticResource ContextMenu}" IsExpanded="True"  Height="auto" Style="{StaticResource ExpanderStyle}"   HorizontalAlignment="Stretch"  Foreground="{x:Null}"  Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:BoomCatalogContainerView}}}" Background="#FF94EA87" BorderBrush="{x:Null}"   >
+            <Expander.Header >
+                <Grid MaxWidth="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="1" FontStyle="Italic" Name="DisplayUserDefinedTextBlock"  HorizontalAlignment="Right"  Width="90" Visibility="{Binding UserDefinedVisibility, Mode=TwoWay}" VerticalAlignment="Center" Text="User-Defined" Foreground="Black"/>
+                    <TextBlock Grid.Column="0"   TextWrapping="NoWrap"  Width="auto"  TextTrimming="CharacterEllipsis"  HorizontalAlignment="Stretch" TextAlignment="Left"  Text="{Binding BoomCatalogName, Mode=TwoWay}" Foreground="Black"   Background="{x:Null}"/>
+                    <TextBox Grid.ColumnSpan="2" Grid.Column="0" Name="RenameTextBox" Visibility="{Binding RenameTextBoxVisibility, Mode=TwoWay}" HorizontalAlignment="Stretch" KeyDown="UIElement_OnKeyDown"  LostFocus="UIElement_OnLostFocus"  Text="{Binding BoomCatalogName, Mode=TwoWay}" Foreground="Black" BorderBrush="{x:Null}"  SelectionBrush="#FF2C4FC3" Background="White"/>
+                </Grid>
+            </Expander.Header>
+            <ListBox Name="StencilListBox" Width="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type wpfViewModel:BoomCatalogContainerView}}}"  ItemContainerStyle="{StaticResource itemstyle}" ItemsSource="{Binding BoomStencilViewModels, Mode=TwoWay}"   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemTemplate>
+                    <DataTemplate  DataType="{x:Type wpfViewModel:BoomStencilViewModel}">
+                        <local:BoomStencilView ContextMenu="{StaticResource StencilMenu}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate> 
+                        <WrapPanel Width="{Binding Width, ElementName=expander}" ScrollViewer.VerticalScrollBarVisibility="Disabled"  />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </Expander>
+    </Grid>
+</UserControl>

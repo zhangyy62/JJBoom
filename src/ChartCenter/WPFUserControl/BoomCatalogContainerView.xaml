@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="JJBoom.BoomCatalogContainerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JJBoom"
+             xmlns:wpfViewModel="clr-namespace:JJBoom"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="BoomCatalogTemplate" DataType="{x:Type wpfViewModel:BoomCatalogViewModel}" >
+                <local:BoomCatalogView></local:BoomCatalogView>
+            </DataTemplate>
+            <ContextMenu x:Key="ContextMenu">
+                <MenuItem Header="Add Catalog" Click="AddCatalog_OnClick" />
+                <MenuItem Header="Delete Catalog" Click="DeleteCatalog_OnClick" />
+            </ContextMenu>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid ContextMenu="{StaticResource ContextMenu}" HorizontalAlignment="Stretch">
+        <ListBox ItemTemplate="{StaticResource BoomCatalogTemplate}" SelectedItem="{Binding SelectedBoomCatalogViewModel}" ItemsSource="{Binding BoomCatalogViewModels, Mode=TwoWay}"  HorizontalAlignment="Stretch"/>
+    </Grid>
+</UserControl>

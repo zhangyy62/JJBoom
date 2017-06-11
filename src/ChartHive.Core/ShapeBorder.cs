@@ -9,7 +9,7 @@ using Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
 using Shape = Microsoft.Office.Interop.PowerPoint.Shape;
 
-namespace ChartHive.Core
+namespace JJBoom.Core
 {
     internal sealed class ShapeBorder
     {

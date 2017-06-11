@@ -5,25 +5,25 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChartHive.Core
+namespace JJBoom.Core
 {
     public class StencilEventArgs : EventArgs
     {
-        private IStencil _iStencil;
+        private IBoom _iStencil;
 
-		public IStencil Stencil
+		public IBoom Stencil
         {
             [CompilerGenerated]
             get { return _iStencil; }
         }
 
-        public StencilEventArgs(IStencil stencil)
+        public StencilEventArgs(IBoom stencil)
         {
  
             SetStencil(stencil);
         }
 
-        public void SetStencil(IStencil iStencil)
+        public void SetStencil(IBoom iStencil)
         {
             this._iStencil = iStencil;
         }

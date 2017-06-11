@@ -9,7 +9,7 @@ using GroupShapes = Microsoft.Office.Interop.PowerPoint.GroupShapes;
 using Shape = Microsoft.Office.Interop.PowerPoint.Shape;
 using ShapeRange = Microsoft.Office.Interop.PowerPoint.ShapeRange;
 
-namespace ChartHive.Core
+namespace JJBoom.Core
 {
     public class ShapeRangeDeCompose
     {
@@ -31,11 +31,11 @@ namespace ChartHive.Core
             Dictionary<Shape, string> dictionary = new Dictionary<Shape, string>();
             if (shape.Type ==  MsoShapeType.msoGroup)
             {
-                ShapeBorder class2 = new ShapeBorder(shape);
+                ShapeBorder shapeBorder = new ShapeBorder(shape);
                 GroupShapes o = shape.GroupItems;
                 try
                 {
-                    if (!class2.method_8())
+                    if (!shapeBorder.method_8())
                     {
                         dictionary.Add(shape, shape.AlternativeText);
           
